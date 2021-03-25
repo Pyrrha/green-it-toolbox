@@ -9,6 +9,8 @@ on:
 
 jobs:
   build-images:
+    runs-on: ubuntu-latest
+
     # Create Docker front image
     - uses: jerray/publish-docker-action@master
       with:
