@@ -30,6 +30,8 @@ jobs:
       run: docker push ${{ secrets.DOCKER_USER }}/pfa-front -a
 
   deploy-staging:
+    needs:
+      - build-images
     runs-on: ubuntu-latest
 
     steps:
