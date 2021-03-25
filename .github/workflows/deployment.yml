@@ -22,7 +22,6 @@ jobs:
           registry: index.docker.io/v1/
           repository: pyrrha/pfa-front
           auto_tag: true
-        working-directory: front
 
   deploy-staging:
     runs-on: ubuntu-latest
