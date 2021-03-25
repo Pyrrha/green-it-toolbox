@@ -11,15 +11,16 @@ jobs:
   build-images:
     runs-on: ubuntu-latest
 
-    # Create Docker front image
-    - uses: jerray/publish-docker-action@master
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        registry: index.docker.io/v1/
-        repository: pyrrha/pfa-front
-        auto_tag: true
-      working-directory: front
+    steps:
+      # Create Docker front image
+      - uses: jerray/publish-docker-action@master
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: index.docker.io/v1/
+          repository: pyrrha/pfa-front
+          auto_tag: true
+        working-directory: front
 
   deploy-staging:
     runs-on: ubuntu-latest
