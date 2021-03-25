@@ -29,31 +29,31 @@ jobs:
     - name: Push the Docker image
       run: docker push ${{ secrets.DOCKER_USER }}/pfa-front -a
 
-#   deploy-staging:
-#     runs-on: ubuntu-latest
-# 
-#     steps:
-#       # Check-out repository
-#       - uses: actions/checkout@v2
-# 
-#       
-#       # Deploy docker-compose file
-#       - name: Deploy docker-compose file
-#         uses: easingthemes/ssh-deploy@v2.1.4
-#         env:
-#           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-#           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-#           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-#           REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
-#           TARGET: ${{ secrets.REMOTE_TARGET }}/pfa.yml
-#           SOURCE: "docker-compose.yml"
-# 
-#       # Apply docker-compose configuration
-#       - name: Apply docker-compose configuration
-#         uses: garygrossgarten/github-action-ssh@release
-#         with:
-#           command: cd ${{ secrets.REMOTE_TARGET }} && docker stack deploy -c pfa.yml pfa
-#           host: ${{ secrets.REMOTE_HOST }}
-#           username: ${{ secrets.REMOTE_USER }}
-#           privateKey: ${{ secrets.SERVER_SSH_KEY }}
-# 
+  deploy-staging:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check-out repository
+      - uses: actions/checkout@v2
+
+      
+      # Deploy docker-compose file
+      - name: Deploy docker-compose file
+        uses: easingthemes/ssh-deploy@v2.1.4
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+          TARGET: ${{ secrets.REMOTE_TARGET }}/pfa.yml
+          SOURCE: "docker-compose.yml"
+
+      # Apply docker-compose configuration
+      - name: Apply docker-compose configuration
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: cd ${{ secrets.REMOTE_TARGET }} && docker stack deploy -c pfa.yml pfa
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          privateKey: ${{ secrets.SERVER_SSH_KEY }}
+
