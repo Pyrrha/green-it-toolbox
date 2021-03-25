@@ -3,12 +3,13 @@ services:
   # Frontend
   front:
     image: pyrrha/pfa-front:latest
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.pfa.rule=Host(`$PFA_FRONT_END_URL`)"
-      - "traefik.http.routers.pfa.entrypoints=websecure"
-      - "traefik.http.routers.pfa.tls.certresolver=letsencrypt"
-      - "traefik.http.services.pfa.loadbalancer.server.port=80"
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.pfa.rule=Host(`$PFA_FRONT_END_URL`)"
+        - "traefik.http.routers.pfa.entrypoints=websecure"
+        - "traefik.http.routers.pfa.tls.certresolver=letsencrypt"
+        - "traefik.http.services.pfa.loadbalancer.server.port=80"
 
 networks:
   srv:
