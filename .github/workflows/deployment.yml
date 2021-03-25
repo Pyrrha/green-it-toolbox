@@ -53,7 +53,7 @@ jobs:
       - name: Apply docker-compose configuration
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: cd ${{ secrets.REMOTE_TARGET }} && docker stack deploy -c pfa.yml pfa
+          command: cd ${{ secrets.REMOTE_TARGET }} && docker stack deploy -c <(docker-compose -f pfa.yml config) pfa
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           privateKey: ${{ secrets.SERVER_SSH_KEY }}
