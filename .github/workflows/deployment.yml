@@ -24,10 +24,10 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
     - name: Build the Docker image
-      run: cd front/ && docker build . --tag ${{ secrets.DOCKER_USER }}/pfa-front:latest
+      run: cd front/ && docker build . --tag ${{ secrets.DOCKER_USER }}/pfa-front:latest --tag ${{ secrets.DOCKER_USER }}/pfa-front:$(date +%s)
 
     - name: Push the Docker image
-      run: docker push ${{ secrets.DOCKER_USER }}/pfa-front:latest
+      run: docker push ${{ secrets.DOCKER_USER }}/pfa-front -a
 
 #   deploy-staging:
 #     runs-on: ubuntu-latest
