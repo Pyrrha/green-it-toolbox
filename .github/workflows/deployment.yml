@@ -37,7 +37,6 @@ jobs:
     steps:
       # Check-out repository
       - uses: actions/checkout@v2
-
       
       # Deploy docker-compose file
       - name: Deploy docker-compose file
