@@ -3,6 +3,8 @@ services:
   # Frontend
   front:
     image: pyrrha/pfa-front:latest
+    networks:
+      - "srv"
     deploy:
       labels:
         - "traefik.enable=true"
