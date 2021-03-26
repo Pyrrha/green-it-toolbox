@@ -1,6 +1,7 @@
 import React from "react";
+import Typography from "@material-ui/core/Typography";
 
 
-const Title = () => <h1>Green IT Toolbox</h1>;
+const Title = () => <Typography variant="h2" align="center" gutterBottom>Green IT Toolbox</Typography>;
 
 export default Title;
