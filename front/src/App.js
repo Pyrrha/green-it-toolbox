@@ -1,11 +1,13 @@
 import React from "react";
 
 import Title from "./Title";
+import Form from "./Form";
 
 function App() {
   return (
     <div className="App">
-        <Title />
+        <Title/>
+        <Form/>
     </div>
   );
 }
