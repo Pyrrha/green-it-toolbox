@@ -7,12 +7,11 @@ services:
     deploy:
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.pfa.rule=Host(`$PFA_BACK_END_URL`)"
-        - "traefik.http.routers.pfa.entrypoints=websecure"
-        - "traefik.http.routers.pfa.tls.certresolver=letsencrypt"
-        - "traefik.http.services.pfa.loadbalancer.server.port=5000"
+        - "traefik.http.routers.apipfa.rule=Host(`$PFA_BACK_END_URL`)"
+        - "traefik.http.routers.apipfa.entrypoints=websecure"
+        - "traefik.http.routers.apipfa.tls.certresolver=letsencrypt"
+        - "traefik.http.services.apipfa.loadbalancer.server.port=5000"
 
-  # Frontend
   front:
     image: pyrrha/pfa-front:latest
     networks:
