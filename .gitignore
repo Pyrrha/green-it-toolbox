@@ -3,6 +3,6 @@ front/.idea
 
 back/venv/
 
+.idea
 .vscode
 *.swp
-
