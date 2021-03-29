@@ -1,5 +1,17 @@
 version: '3.9'
 services:
+  back:
+    image: pyrrha/pfa-back:latest
+    networks:
+      - "srv"
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.pfa.rule=Host(`$PFA_BACK_END_URL`)"
+        - "traefik.http.routers.pfa.entrypoints=websecure"
+        - "traefik.http.routers.pfa.tls.certresolver=letsencrypt"
+        - "traefik.http.services.pfa.loadbalancer.server.port=5000"
+
   # Frontend
   front:
     image: pyrrha/pfa-front:latest
