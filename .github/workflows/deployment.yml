@@ -50,7 +50,9 @@ jobs:
 
   deploy-staging:
     needs:
-      - build-images
+      - build-front-image
+      - build-back-image
+
     runs-on: ubuntu-latest
 
     steps:
