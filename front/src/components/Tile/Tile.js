@@ -3,65 +3,70 @@ import PropTypes from 'prop-types';
 import './Tile.scss';
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import {makeStyles} from "@material-ui/core/styles";
+import {withStyles} from "@material-ui/core/styles";
 import {FormControl, FormControlLabel, FormGroup, Radio, RadioGroup, Checkbox, FormHelperText} from "@material-ui/core";
 import {snakeCase} from "snake-case";
 import {green} from "@material-ui/core/colors";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = theme => ({
     paper: {
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
-}));
+});
 
-const Tile = (props) => {
-    const classes = useStyles();
-    const tile = props.tile
+class Tile extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
 
-    return (
-        <Paper className={classes.paper}>
-            <Typography variant="h5" align={'center'} gutterBottom>{tile.title}</Typography>
-            <Typography>{tile.text}</Typography>
-            {
-                "choices" in tile ?
-                    (
-                            <RadioGroup aria-label={tile.title} required
-                                        name={snakeCase(tile.title) + "[choice]"}>
+        }
+    }
+
+    render() {
+
+        return (
+            <Paper className={this.props.classes.paper}>
+                <Typography variant="h5" align={'center'} gutterBottom>{this.props.tile.title}</Typography>
+                <Typography>{this.props.tile.text}</Typography>
+                {
+                    "choices" in this.props.tile ?
+                        (
+                            <RadioGroup aria-label={this.props.tile.title} required
+                                        name={snakeCase(this.props.tile.title) + "[choice]"}>
                                 {
-                                    Object.keys(tile.choices).map((keyChoice) => (
+                                    Object.keys(this.props.tile.choices).map((keyChoice) => (
                                             <FormControlLabel value={keyChoice} control={<Radio/>}
-                                                              label={tile.choices[keyChoice].label}
-                                                              key={keyChoice} className={classes.radio}/>
+                                                              label={this.props.tile.choices[keyChoice].label}
+                                                              key={keyChoice} />
                                         )
                                     )
                                 }
                             </RadioGroup>
-                    ) : null
-            }
-            {
-                "options" in tile ? (
-                    <FormGroup aria-label={tile.title}
-                               required>
-                        {
-                            Object.keys(tile.options).map((keyOption) => (
-                                    <FormControlLabel control={<Checkbox name={snakeCase(tile.title) + "[options][]"}/>}
-                                                      label={tile.options[keyOption].label}
-                                                      value={keyOption}
-                                                      key={keyOption}
-                                                      checked={tile.options[keyOption].default}
-                                                      disabled={tile.options[keyOption].default}/>
+                        ) : null
+                }
+                {
+                    "options" in this.props.tile ? (
+                        <FormGroup aria-label={this.props.tile.title}
+                                   required>
+                            {
+                                Object.keys(this.props.tile.options).map((keyOption) => (
+                                        <FormControlLabel control={<Checkbox name={snakeCase(this.props.tile.title) + "[options][]"}/>}
+                                                          label={this.props.tile.options[keyOption].label}
+                                                          value={keyOption}
+                                                          key={keyOption}
+                                                          checked={this.props.tile.options[keyOption].default}
+                                                          disabled={this.props.tile.options[keyOption].default}/>
+                                    )
                                 )
-                            )
-                        }
-                    </FormGroup>
-                ) : null
-            }
-        </Paper>
-    );
+                            }
+                        </FormGroup>
+                    ) : null
+                }
+            </Paper>
+        )
+    }
 }
 
-Tile.defaultProps = {};
-
-export default Tile;
+export default withStyles(useStyles)(Tile);

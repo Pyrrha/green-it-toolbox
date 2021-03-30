@@ -21,6 +21,7 @@ class Form extends React.Component{
                     color: theme.palette.text.secondary,
                 }
             })),
+            tileRefs: [],
         }
     }
 
@@ -55,7 +56,7 @@ class Form extends React.Component{
     }
 
     render() {
-        const {isLoaded, configs, classes} = this.state;
+        const {isLoaded, configs, classes, tileRefs} = this.state;
 
         if (!isLoaded){
             return (<div>Loading...</div>)
@@ -65,11 +66,17 @@ class Form extends React.Component{
                 <Grid item xs={11}>
                     <form>
                         <Grid container justify="center" spacing={2}>
-                            {Object.keys(configs).map((index) => (
-                                <Grid key={configs[index].title} xs={4} item>
-                                    <Tile tile={configs[index]} key={configs[index].title}/>
-                                </Grid>
-                            ))}
+                            {Object.keys(configs).map((index) => {
+                                let ref = new React.createRef();
+
+                                tileRefs.push(ref);
+
+                                return (
+                                    <Grid key={configs[index].title} xs={4} item>
+                                        <Tile ref={ref} tile={configs[index]} key={configs[index].title}/>
+                                    </Grid>
+                                )
+                            })}
                         </Grid>
                         <Button type={"submit"} variant={"outlined"}>Generate</Button>
                     </form>
