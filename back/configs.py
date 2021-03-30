@@ -8,20 +8,38 @@ def get_filters():
         "items": [{
             "title": "Language",
             "choices": {
-                "py": "Python",
-                "js": "Javascript",
-                "php": "PHP",
+                "py": {
+                    "label": "Python"
+                }
+                "js": {
+                    "label": "Javascript"
+                }
+                "php": {
+                    "label": "PHP"
+                }
             },
             "text": "Which language do you use?"
         },
         {
             "title": "Tools used",
             "options": {
-                "git": "Git",
-                "github": "Github Actions",
-                "gitlab": "Gitlab CI",
-                "docker": "Docker",
-                "github-flow": "Using Github git flow"
+                "git": {
+                  "label": "Git",
+                  "default": true,
+                },
+                "github": {
+                  "label": "Github Actions"
+                },
+                "gitlab": {
+                  "label": "Gitlab CI"
+                },
+                "docker": {
+                  "label": "Docker"
+                },
+                "github-flow": {
+                  "label": "Using Github git flow",
+                  "default": true 
+                },
             },
             "text": "Choose your tool."
 
@@ -29,8 +47,12 @@ def get_filters():
         {
             "title": "Mode",
             "choices": {
-                "permissive": "Permissive",
-                "strict": "Strict"
+                "permissive": {
+                    "label": "Permissive",
+                }
+                "strict": {
+                    "label": "Strict"
+                }
             },
             "text": "Select if tests can block a release."
         }]
