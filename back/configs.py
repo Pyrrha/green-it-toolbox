@@ -10,10 +10,10 @@ def get_filters():
             "choices": {
                 "py": {
                     "label": "Python"
-                }
+                },
                 "js": {
                     "label": "Javascript"
-                }
+                },
                 "php": {
                     "label": "PHP"
                 }
@@ -25,7 +25,7 @@ def get_filters():
             "options": {
                 "git": {
                   "label": "Git",
-                  "default": true,
+                  "default": True,
                 },
                 "github": {
                   "label": "Github Actions"
@@ -38,7 +38,7 @@ def get_filters():
                 },
                 "github-flow": {
                   "label": "Using Github git flow",
-                  "default": true 
+                  "default": True 
                 },
             },
             "text": "Choose your tool."
@@ -49,7 +49,7 @@ def get_filters():
             "choices": {
                 "permissive": {
                     "label": "Permissive",
-                }
+                },
                 "strict": {
                     "label": "Strict"
                 }
