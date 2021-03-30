@@ -5,4 +5,5 @@ back/venv/
 
 .idea
 .vscode
+back/__pycache__/
 *.swp
