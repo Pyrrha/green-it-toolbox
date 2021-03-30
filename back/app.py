@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 
 from configs import configs_bp
 
@@ -10,5 +11,7 @@ def hello_world():
 
 if __name__ == '__main__':
     app.register_blueprint(configs_bp)
+
+    CORS(app)
 
     app.run(host='0.0.0.0')
