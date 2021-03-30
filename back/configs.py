@@ -38,4 +38,6 @@ def get_filters():
 
 @configs_bp.route('/configs', methods=['POST'])
 def submit_form():
-    return {}
+    return {
+        "items": []
+    }
