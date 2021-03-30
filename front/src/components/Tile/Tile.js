@@ -32,7 +32,7 @@ const Tile = (props) => {
                                 {
                                     Object.keys(tile.choices).map((keyChoice) => (
                                             <FormControlLabel value={keyChoice} control={<Radio/>}
-                                                              label={tile.choices[keyChoice]}
+                                                              label={tile.choices[keyChoice].label}
                                                               key={keyChoice} className={classes.radio}/>
                                         )
                                     )
@@ -47,9 +47,11 @@ const Tile = (props) => {
                         {
                             Object.keys(tile.options).map((keyOption) => (
                                     <FormControlLabel control={<Checkbox name={snakeCase(tile.title) + "[options][]"}/>}
-                                                      label={tile.options[keyOption]}
+                                                      label={tile.options[keyOption].label}
                                                       value={keyOption}
-                                                      key={keyOption}/>
+                                                      key={keyOption}
+                                                      checked={tile.options[keyOption].default}
+                                                      disabled={tile.options[keyOption].default}/>
                                 )
                             )
                         }

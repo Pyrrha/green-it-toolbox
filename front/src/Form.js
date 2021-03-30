@@ -62,18 +62,16 @@ class Form extends React.Component{
         }
         return (
             <Grid container className={classes.root} spacing={2} justify={"center"}>
-                {(console.log(configs))}
                 <Grid item xs={11}>
                     <form>
                         <Grid container justify="center" spacing={2}>
                             {Object.keys(configs).map((index) => (
                                 <Grid key={configs[index].title} xs={4} item>
-                                    {(console.log(configs))}
                                     <Tile tile={configs[index]} key={configs[index].title}/>
                                 </Grid>
                             ))}
                         </Grid>
-                        <Button type={"submit"} variant={"outlined"}>Générer</Button>
+                        <Button type={"submit"} variant={"outlined"}>Generate</Button>
                     </form>
                 </Grid>
             </Grid>
