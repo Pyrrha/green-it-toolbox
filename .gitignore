@@ -4,4 +4,8 @@ back/venv
 
 front/node_modules
 front/.idea
+
+.idea
+.vscode
+*.swp
 *.swp

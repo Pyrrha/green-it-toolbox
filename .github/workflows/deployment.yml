@@ -4,13 +4,11 @@ name: Deployment
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
   workflow_dispatch:
 
 jobs:
-  build-images:
+  build-front-image:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,9 +27,30 @@ jobs:
     - name: Push the Docker image
       run: docker push ${{ secrets.DOCKER_USER }}/pfa-front -a
 
+  build-back-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Docker login
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+    - name: Build the Docker image
+      run: cd back/ && docker build . --tag ${{ secrets.DOCKER_USER }}/pfa-back:latest --tag ${{ secrets.DOCKER_USER }}/pfa-back:$(date "+%Y-%m-%dT%H-%M-%SZ")
+
+    - name: Push the Docker image
+      run: docker push ${{ secrets.DOCKER_USER }}/pfa-back -a
+
   deploy-staging:
     needs:
-      - build-images
+      - build-front-image
+      - build-back-image
+
     runs-on: ubuntu-latest
 
     steps:
