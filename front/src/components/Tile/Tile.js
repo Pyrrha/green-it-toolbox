@@ -14,6 +14,9 @@ const useStyles = theme => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
+    formControl: {
+        display: "inherit"
+    }
 });
 
 class Tile extends React.Component {
@@ -61,9 +64,10 @@ class Tile extends React.Component {
                 {
                     "choices" in this.props.tile ?
                         (
-                            <FormControl component={"fieldset"} required={true} error={this.state.isChoice}>
+                            <FormControl component={"fieldset"} required={true} error={this.state.isChoice} className={this.props.classes.formControl}>
                                 <RadioGroup aria-label={this.props.tile.title}
-                                            name={snakeCase(this.props.tile.title) + "[choice]"} onChange={this.handleChoice}>
+                                            name={snakeCase(this.props.tile.title) + "[choice]"}
+                                            onChange={this.handleChoice}>
                                     {
                                         Object.keys(this.props.tile.choices).map((keyChoice) => (
                                                 <FormControlLabel value={keyChoice} control={<Radio color={"primary"}/>}
