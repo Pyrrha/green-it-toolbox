@@ -62,8 +62,22 @@ class Form extends React.Component {
             }
             resolve();
         }).then(()=>{
-            let value = new FormData(form);
-            sendData(value, "https://api.pfa.dietz.dev/request", "post")
+            let formData = new FormData(form);
+            let object = {};
+            formData.forEach((value, index) => {
+                let key = index.slice(-2) === "[]" ? index.slice(0, -2) : index
+                if(!Reflect.has(object, key)){
+                    object[key] = value;
+                    return;
+                }
+                if(!Array.isArray(object[key]) && index.slice(-2) === "[]"){
+                    object[key] = [object[key]];
+                }
+                object[key].push(value);
+            });
+            let value = JSON.stringify(object);
+
+            sendData(value, "https://api.pfa.dietz.dev/configs", "post")
         }).then(()=>{
             this.doneSubmit();
         });
