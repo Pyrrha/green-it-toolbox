@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Tile from "./components/Tile/Tile";
 import {Button} from "@material-ui/core";
@@ -14,12 +14,10 @@ const useStyles = theme => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
-    generate: {
-
-    }
+    generate: {}
 });
 
-class Form extends React.Component{
+class Form extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -27,6 +25,30 @@ class Form extends React.Component{
             configs: [],
             tileRefs: [],
         }
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+
+        for (const tileIndex in this.state.tileRefs) {
+            const tile = this.state.tileRefs[tileIndex].current;
+            if (!tile.isValid()){
+                return false;
+            }
+        }
+
+        const form = event.currentTarget;
+        const initSubmit = new Promise((resolve)=>{
+            for (const tileIndex in this.state.tileRefs) {
+                const tile = this.state.tileRefs[tileIndex].current;
+                tile.submit();
+            }
+            resolve();
+        }).then(()=>{
+            form.submit()
+        });
+
     }
 
     componentDidMount() {
@@ -40,10 +62,16 @@ class Form extends React.Component{
 
         fetch("https://api.pfa.dietz.dev/configs", init).then(result => result.json()).then(
             (result) => {
+                let tileRefs = [];
+                for (let tile in result.items){
+                    result.items[tile]['ref'] = React.createRef();
+                    tileRefs.push(result.items[tile]['ref']);
+                }
                 this.setState(
                     {
                         configs: result.items,
                         isLoaded: true,
+                        tileRefs: tileRefs,
                     }
                 )
             },
@@ -63,27 +91,24 @@ class Form extends React.Component{
         const {isLoaded, configs, tileRefs} = this.state;
         let classes = this.props.classes;
 
-        if (!isLoaded){
+        if (!isLoaded) {
             return (<div>Loading...</div>)
         }
         return (
             <Grid container className={classes.root} spacing={2} justify={"center"}>
                 <Grid item xs={11}>
-                    <form>
+                    <form onSubmit={this.handleSubmit}>
                         <Grid container justify="center" spacing={2}>
                             {Object.keys(configs).map((index) => {
-                                let ref = new React.createRef();
-
-                                tileRefs.push(ref);
-
                                 return (
                                     <Grid key={configs[index].title} xs={4} item>
-                                        <Tile ref={ref} tile={configs[index]} key={configs[index].title}/>
+                                        <Tile ref={configs[index].ref} tile={configs[index]} key={configs[index].title}/>
                                     </Grid>
                                 )
                             })}
                         </Grid>
-                        <Button type={"submit"} variant={"contained"} color={"primary"} className={classes.generate}>Generate</Button>
+                        <Button type={"submit"} variant={"contained"} color={"primary"}
+                                className={classes.generate}>Generate</Button>
                     </form>
                 </Grid>
             </Grid>

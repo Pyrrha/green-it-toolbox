@@ -20,8 +20,30 @@ class Tile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            isChoice: false,
+            helperText: "Please choose one.",
+            disabled: true,
         }
+        this.handleChoice = this.handleChoice.bind(this);
+        this.isValid = this.isValid.bind(this);
+        this.submit = this.submit.bind(this);
+    }
+
+    handleChoice(event){
+        this.setState({
+            isChoice: true,
+            helperText: "",
+        })
+    }
+
+    isValid(){
+        return this.props.tile.choices === undefined || this.props.tile.choices.length <= 0 || this.state.isChoice;
+    }
+
+    submit(){
+        this.setState({
+            disabled: false,
+        })
     }
 
     render() {
@@ -33,17 +55,20 @@ class Tile extends React.Component {
                 {
                     "choices" in this.props.tile ?
                         (
-                            <RadioGroup aria-label={this.props.tile.title} required
-                                        name={snakeCase(this.props.tile.title) + "[choice]"}>
-                                {
-                                    Object.keys(this.props.tile.choices).map((keyChoice) => (
-                                            <FormControlLabel value={keyChoice} control={<Radio color={"primary"}/>}
-                                                              label={this.props.tile.choices[keyChoice].label}
-                                                              key={keyChoice}/>
+                            <FormControl component={"fieldset"} required={true} error={this.state.isChoice}>
+                                <RadioGroup aria-label={this.props.tile.title}
+                                            name={snakeCase(this.props.tile.title) + "[choice]"} onChange={this.handleChoice}>
+                                    {
+                                        Object.keys(this.props.tile.choices).map((keyChoice) => (
+                                                <FormControlLabel value={keyChoice} control={<Radio color={"primary"}/>}
+                                                                  label={this.props.tile.choices[keyChoice].label}
+                                                                  key={keyChoice}/>
+                                            )
                                         )
-                                    )
-                                }
-                            </RadioGroup>
+                                    }
+                                </RadioGroup>
+                                <FormHelperText>{this.state.helperText}</FormHelperText>
+                            </FormControl>
                         ) : null
                 }
                 {
@@ -57,7 +82,7 @@ class Tile extends React.Component {
                                                           value={keyOption}
                                                           key={keyOption}
                                                           checked={this.props.tile.options[keyOption].default}
-                                                          disabled={this.props.tile.options[keyOption].default}/>
+                                                          disabled={this.props.tile.options[keyOption].default && this.state.disabled}/>
                                     )
                                 )
                             }
