@@ -18,12 +18,30 @@ const useStyles = theme => ({
 });
 
 function sendData(value, url, method="post"){
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.open(method, url, true);
 
     xhr.setRequestHeader("Content-Type", "application/json");
 
     xhr.send(value);
+}
+
+function serialize(form){
+    let formData = new FormData(form);
+    let object = {};
+    formData.forEach((value, index) => {
+        let key = index.slice(-2) === "[]" ? index.slice(0, -2) : index
+        if(!Reflect.has(object, key)){
+            object[key] = value;
+            return;
+        }
+        if(!Array.isArray(object[key]) && index.slice(-2) === "[]"){
+            object[key] = [object[key]];
+        }
+        object[key].push(value);
+    });
+    let value = JSON.stringify(object);
+    return value;
 }
 
 class Form extends React.Component {
@@ -62,21 +80,7 @@ class Form extends React.Component {
             }
             resolve();
         }).then(()=>{
-            let formData = new FormData(form);
-            let object = {};
-            formData.forEach((value, index) => {
-                let key = index.slice(-2) === "[]" ? index.slice(0, -2) : index
-                if(!Reflect.has(object, key)){
-                    object[key] = value;
-                    return;
-                }
-                if(!Array.isArray(object[key]) && index.slice(-2) === "[]"){
-                    object[key] = [object[key]];
-                }
-                object[key].push(value);
-            });
-            let value = JSON.stringify(object);
-
+            let value = serialize(form);
             sendData(value, "https://api.pfa.dietz.dev/configs", "post")
         }).then(()=>{
             this.doneSubmit();
