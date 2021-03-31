@@ -61,5 +61,9 @@ def get_filters():
 @configs_bp.route('/configs', methods=['POST'])
 def submit_form():
     return {
-        "items": []
+        "items": [{
+            "title": "Dockerfile",
+            "content": "from nginx:latest...",
+            "modal": "Texte in modal view to explain how to install it."
+        }]
     }
