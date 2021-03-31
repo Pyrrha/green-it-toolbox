@@ -3,6 +3,7 @@ import React from "react";
 import Title from "./Title";
 import Form from "./Form";
 import {withStyles} from "@material-ui/core";
+import Result from "./components/Result/Result";
 
 
 const useStyles = theme => ({
@@ -41,6 +42,7 @@ class App extends React.Component {
                 <div className={classes.root}>
                     <Title/>
                     <Form/>
+                    <Result blocks={this.state.blocks}/>
                 </div>
             )
         }

@@ -20,7 +20,7 @@ class Code extends React.Component {
 
     render() {
         return (
-            <Paper className={classes.paper}>
+            <Paper className={this.props.classes.paper}>
 
             </Paper>
         )
