@@ -15,6 +15,12 @@ const useStyles = theme => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
+    item: {
+        minWidth: "20em",
+        maxWidth: "45vw",
+        marginTop: "2em",
+        marginBottom: "2em"
+    }
 })
 
 class Result extends React.Component {
@@ -25,15 +31,15 @@ class Result extends React.Component {
     }
 
     render() {
-
+        const classes = this.props.classes;
 
         return (
-            <Grid container className={this.props.classes.root} spacing={2} justify={"center"}>
+            <Grid container className={classes.root} spacing={2} justify={"center"}>
                 <Grid item xs={11}>
                     <Grid container justify="center" spacing={2}>
                         {Object.keys(this.props.blocks.items).map((index) => {
                             return (
-                                <Grid key={this.props.blocks.items[index].title} xs={6} item>
+                                <Grid key={this.props.blocks.items[index].title} className={classes.item} xs item>
                                     <Code lang={this.props.blocks.items[index].lang}
                                           content={this.props.blocks.items[index].content}
                                           modal={this.props.blocks.items[index].modal}
