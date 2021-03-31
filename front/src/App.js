@@ -2,33 +2,33 @@ import React from "react";
 
 import Title from "./Title";
 import Form from "./Form";
-import {makeStyles} from "@material-ui/core";
+import {withStyles} from "@material-ui/core";
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = theme => ({
     root: {
         overflow: 'hidden'
     }
-}))
+})
 
-function App() {
-    const classes = useStyles()
-    return (
-        <div className={classes.root}>
-            <Title/>
-            <Form/>
-        </div>
-    );
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            blocks: [],
+        }
+    }
+
+    render() {
+        const classes = this.props.classes;
+
+        return (
+            <div className={classes.root}>
+                <Title/>
+                <Form/>
+            </div>
+        )
+    }
 }
 
-//import Button from '@material-ui/core/Button';
-//
-//function App() {
-//    return (
-//        <Button variant="contained" color="primary">
-//            Hello World
-//        </Button>
-//    );
-//}
-
-export default App;
+export default withStyles(useStyles)(App);

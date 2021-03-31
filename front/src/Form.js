@@ -17,13 +17,18 @@ const useStyles = theme => ({
     generate: {}
 });
 
-function sendData(value, url, method="post"){
-    let xhr = new XMLHttpRequest();
-    xhr.open(method, url, true);
-
-    xhr.setRequestHeader("Content-Type", "application/json");
-
-    xhr.send(value);
+function sendData(value, url, callback, method="post"){
+    let header = new Headers();
+    let init = {
+        method: method,
+        header: header,
+        mode: 'cors',
+        cache: 'default',
+        body: value,
+    };
+    fetch(url, init)
+        .then(result => result.json())
+        .then(callback)
 }
 
 function serialize(form){
@@ -81,11 +86,10 @@ class Form extends React.Component {
             resolve();
         }).then(()=>{
             let value = serialize(form);
-            sendData(value, "https://api.pfa.dietz.dev/configs", "post")
+            sendData(value, "https://api.pfa.dietz.dev/configs")
         }).then(()=>{
             this.doneSubmit();
         });
-
     }
 
     componentDidMount() {
@@ -125,7 +129,7 @@ class Form extends React.Component {
     }
 
     render() {
-        const {isLoaded, configs, tileRefs} = this.state;
+        const {isLoaded, configs} = this.state;
         let classes = this.props.classes;
 
         if (!isLoaded) {
@@ -134,7 +138,7 @@ class Form extends React.Component {
         return (
             <Grid container className={classes.root} spacing={2} justify={"center"}>
                 <Grid item xs={11}>
-                    <form action={"https://api.pfa.dietz.dev/request"} method={"post"} onSubmit={this.handleSubmit}>
+                    <form method={"post"} onSubmit={this.handleSubmit}>
                         <Grid container justify="center" spacing={2}>
                             {Object.keys(configs).map((index) => {
                                 return (
