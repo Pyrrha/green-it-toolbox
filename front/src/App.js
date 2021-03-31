@@ -2,14 +2,23 @@ import React from "react";
 
 import Title from "./Title";
 import Form from "./Form";
+import {makeStyles} from "@material-ui/core";
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        overflow: 'hidden'
+    }
+}))
 
 function App() {
-  return (
-    <div className="App">
-        <Title/>
-        <Form/>
-    </div>
-  );
+    const classes = useStyles()
+    return (
+        <div className={classes.root}>
+            <Title/>
+            <Form/>
+        </div>
+    );
 }
 
 //import Button from '@material-ui/core/Button';

@@ -37,9 +37,9 @@ class Tile extends React.Component {
                                         name={snakeCase(this.props.tile.title) + "[choice]"}>
                                 {
                                     Object.keys(this.props.tile.choices).map((keyChoice) => (
-                                            <FormControlLabel value={keyChoice} control={<Radio/>}
+                                            <FormControlLabel value={keyChoice} control={<Radio color={"primary"}/>}
                                                               label={this.props.tile.choices[keyChoice].label}
-                                                              key={keyChoice} />
+                                                              key={keyChoice}/>
                                         )
                                     )
                                 }
@@ -52,7 +52,7 @@ class Tile extends React.Component {
                                    required>
                             {
                                 Object.keys(this.props.tile.options).map((keyOption) => (
-                                        <FormControlLabel control={<Checkbox name={snakeCase(this.props.tile.title) + "[options][]"}/>}
+                                        <FormControlLabel control={<Checkbox color={"primary"} name={snakeCase(this.props.tile.title) + "[options][]"}/>}
                                                           label={this.props.tile.options[keyOption].label}
                                                           value={keyOption}
                                                           key={keyOption}

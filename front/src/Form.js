@@ -1,9 +1,23 @@
 import React from 'react'
 
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Tile from "./components/Tile/Tile";
 import {Button} from "@material-ui/core";
+
+const useStyles = theme => ({
+    root: {
+        flexGrow: 1,
+    },
+    paper: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+    generate: {
+
+    }
+});
 
 class Form extends React.Component{
     constructor(props) {
@@ -11,16 +25,6 @@ class Form extends React.Component{
         this.state = {
             isLoaded: false,
             configs: [],
-            classes: makeStyles((theme) => ({
-                root: {
-                    flexGrow: 1,
-                },
-                paper: {
-                    padding: theme.spacing(2),
-                    textAlign: 'center',
-                    color: theme.palette.text.secondary,
-                }
-            })),
             tileRefs: [],
         }
     }
@@ -56,7 +60,8 @@ class Form extends React.Component{
     }
 
     render() {
-        const {isLoaded, configs, classes, tileRefs} = this.state;
+        const {isLoaded, configs, tileRefs} = this.state;
+        let classes = this.props.classes;
 
         if (!isLoaded){
             return (<div>Loading...</div>)
@@ -78,7 +83,7 @@ class Form extends React.Component{
                                 )
                             })}
                         </Grid>
-                        <Button type={"submit"} variant={"outlined"}>Generate</Button>
+                        <Button type={"submit"} variant={"contained"} color={"primary"} className={classes.generate}>Generate</Button>
                     </form>
                 </Grid>
             </Grid>
@@ -86,4 +91,4 @@ class Form extends React.Component{
     }
 }
 
-export default Form;
+export default withStyles(useStyles)(Form);
