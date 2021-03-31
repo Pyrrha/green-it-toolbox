@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './Tile.scss';
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import {withStyles} from "@material-ui/core/styles";
 import {FormControl, FormControlLabel, FormGroup, Radio, RadioGroup, Checkbox, FormHelperText} from "@material-ui/core";
 import {snakeCase} from "snake-case";
-import {green} from "@material-ui/core/colors";
 
 const useStyles = theme => ({
     paper: {
