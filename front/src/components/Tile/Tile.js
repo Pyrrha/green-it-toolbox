@@ -9,8 +9,10 @@ import {snakeCase} from "snake-case";
 const useStyles = theme => ({
     paper: {
         padding: theme.spacing(2),
-        textAlign: 'center',
         color: theme.palette.text.secondary,
+    },
+    paperTitle: {
+        marginBottom: "1rem",
     },
     formControl: {
         display: "inherit"
@@ -57,7 +59,7 @@ class Tile extends React.Component {
 
         return (
             <Paper className={this.props.classes.paper}>
-                <Typography variant="h5" align={'center'} gutterBottom>{this.props.tile.title}</Typography>
+                <Typography variant="h5" className={this.props.classes.paperTitle} align={'center'} gutterBottom>{this.props.tile.title}</Typography>
                 <Typography>{this.props.tile.text}</Typography>
                 {
                     "choices" in this.props.tile ?

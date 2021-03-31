@@ -34,7 +34,7 @@ class Result extends React.Component {
                         {Object.keys(this.props.blocks.items).map((index) => {
                             return (
                                 <Grid key={this.props.blocks.items[index].title} xs={6} item>
-                                    <Code lang={"bash"}
+                                    <Code lang={this.props.blocks.items[index].lang}
                                           content={this.props.blocks.items[index].content}
                                           modal={this.props.blocks.items[index].modal}
                                           title={this.props.blocks.items[index].title} />
