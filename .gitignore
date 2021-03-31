@@ -1,9 +1,11 @@
+back/__pycache__
+back/*/__pycache__
+back/venv
+
 front/node_modules
 front/.idea
 
-back/venv/
-
 .idea
 .vscode
-back/__pycache__/
+*.swp
 *.swp
