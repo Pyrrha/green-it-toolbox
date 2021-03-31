@@ -41,7 +41,6 @@ class App extends React.Component {
                 <div className={classes.root}>
                     <Title/>
                     <Form/>
-                    <div>Ya un block</div>
                 </div>
             )
         }
