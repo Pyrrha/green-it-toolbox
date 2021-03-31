@@ -17,17 +17,34 @@ class App extends React.Component {
         this.state = {
             blocks: [],
         }
+        this.updateCode = this.updateCode.bind(this)
+    }
+
+    updateCode(blocks) {
+        this.setState({
+            blocks: blocks
+        });
     }
 
     render() {
         const classes = this.props.classes;
-
-        return (
-            <div className={classes.root}>
-                <Title/>
-                <Form/>
-            </div>
-        )
+        const {blocks} = this.state;
+        if (blocks.length <= 0) {
+            return (
+                <div className={classes.root}>
+                    <Title/>
+                    <Form updateCode={this.updateCode}/>
+                </div>
+            )
+        } else {
+            return (
+                <div className={classes.root}>
+                    <Title/>
+                    <Form/>
+                    <div>Ya un block</div>
+                </div>
+            )
+        }
     }
 }
 

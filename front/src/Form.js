@@ -31,6 +31,10 @@ function sendData(value, url, callback, method="post"){
         .then(callback)
 }
 
+function handleData(response){
+    console.log(response);
+}
+
 function serialize(form){
     let formData = new FormData(form);
     let object = {};
@@ -86,7 +90,8 @@ class Form extends React.Component {
             resolve();
         }).then(()=>{
             let value = serialize(form);
-            sendData(value, "https://api.pfa.dietz.dev/configs")
+            sendData(value, "https://api.pfa.dietz.dev/configs", this.props.updateCode)
+            // sendData(value, "https://api.pfa.dietz.dev/configs", handleData)
         }).then(()=>{
             this.doneSubmit();
         });
