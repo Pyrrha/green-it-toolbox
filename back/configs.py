@@ -64,6 +64,7 @@ def submit_form():
         "items": [{
             "title": "Dockerfile",
             "content": "from nginx:latest...",
-            "modal": "Texte in modal view to explain how to install it."
+            "modal": "Texte in modal view to explain how to install it.",
+            "lang": "yaml"
         }]
     }
