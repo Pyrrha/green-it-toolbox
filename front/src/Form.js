@@ -17,6 +17,15 @@ const useStyles = theme => ({
     generate: {}
 });
 
+function sendData(value, url, method="post"){
+    var xhr = new XMLHttpRequest();
+    xhr.open(method, url, true);
+
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.send(value);
+}
+
 class Form extends React.Component {
     constructor(props) {
         super(props);
@@ -26,6 +35,13 @@ class Form extends React.Component {
             tileRefs: [],
         }
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    doneSubmit(){
+        for (const tileIndex in this.state.tileRefs) {
+            const tile = this.state.tileRefs[tileIndex].current;
+            tile.doneSubmit();
+        }
     }
 
     handleSubmit(event) {
@@ -46,7 +62,10 @@ class Form extends React.Component {
             }
             resolve();
         }).then(()=>{
-            form.submit()
+            let value = new FormData(form);
+            sendData(value, "https://api.pfa.dietz.dev/request", "post")
+        }).then(()=>{
+            this.doneSubmit();
         });
 
     }
@@ -97,7 +116,7 @@ class Form extends React.Component {
         return (
             <Grid container className={classes.root} spacing={2} justify={"center"}>
                 <Grid item xs={11}>
-                    <form onSubmit={this.handleSubmit}>
+                    <form action={"https://api.pfa.dietz.dev/request"} method={"post"} onSubmit={this.handleSubmit}>
                         <Grid container justify="center" spacing={2}>
                             {Object.keys(configs).map((index) => {
                                 return (

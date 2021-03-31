@@ -46,6 +46,12 @@ class Tile extends React.Component {
         })
     }
 
+    doneSubmit(){
+        this.setState({
+            disabled: true,
+        })
+    }
+
     render() {
 
         return (
