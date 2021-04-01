@@ -1,7 +1,5 @@
 from abc import ABC, abstractmethod
 
-from viewer.visitor import Visitor
-
 class Node(ABC):
     name = ""
 
