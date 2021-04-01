@@ -1,0 +1,31 @@
+{
+    "name": "default pipeline",
+    "groups": [
+        {
+            "name": "group 1",
+            "jobs": [
+                {
+                    "name": "job beep beep",
+                    "steps": [
+                        {
+                            "name": "step 1",
+                            "command": "throw your hands up then point them to the floor"
+                        },
+                        {
+                            "name": "step 2",
+                            "command": "here's what to do now get down on all fours"
+                        },
+                        {
+                            "name": "step 3",
+                            "command": "just bounce around it's easy follow me"
+                        },
+                        {
+                            "name": "step 4",
+                            "command": "go crazy now, and beep beep like a sheep"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
