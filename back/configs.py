@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, jsonify
+from flask import Flask, Blueprint, jsonify, request
 
 configs_bp = Blueprint('configs', __name__)
 
@@ -45,7 +45,7 @@ def get_filters():
         },
         {
             "title": "Environments",
-            "choices": {
+            "options": {
                 "staging": {
                     "label": "Staging"
                 },
@@ -60,6 +60,8 @@ def get_filters():
 
 @configs_bp.route('/configs', methods=['POST'])
 def submit_form():
+    print(request.get_json())
+
     return {
         "items": [{
             "title": "Dockerfile",
