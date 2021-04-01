@@ -1,7 +1,7 @@
 from typing import *
 
-from ast.node import Node
-from ast.group import Group
+from abstraction.node import Node
+from abstraction.group import Group
 
 class Pipeline(Node):
     groups: List[Group] = []
