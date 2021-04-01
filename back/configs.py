@@ -48,7 +48,7 @@ def get_filters():
             "choices": {
                 "staging": {
                     "label": "Staging"
-                }
+                },
                 "prod": {
                     "label": "Production",
                     "default": True
