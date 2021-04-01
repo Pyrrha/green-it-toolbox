@@ -3,6 +3,14 @@ from flask_cors import CORS
 
 from configs import configs_bp
 
+from abstraction.group import Group
+from abstraction.job import Job
+from abstraction.node import Node
+from abstraction.pipeline import Pipeline
+from abstraction.step import Step
+
+from viewer.pretty_printer import PrettyPrinter
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -13,5 +21,15 @@ if __name__ == '__main__':
     app.register_blueprint(configs_bp)
 
     CORS(app)
+
+    pipeline = Pipeline()
+    group = Group()
+    job = Job()
+
+    job.add_step(Step())
+    group.add_job(Job())
+    pipeline.add_group(group)
+
+    pipeline.accept(PrettyPrinter())
 
     app.run(host='0.0.0.0')

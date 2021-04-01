@@ -4,4 +4,7 @@ from abstraction.node import Node
 from abstraction.step import Step
 
 class Job(Node):
-    jobs: List[Step] = []
+    steps: List[Step] = []
+
+    def add_step(self, step: Step):
+        self.steps.append(step)

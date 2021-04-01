@@ -9,28 +9,27 @@ from abstraction.step import Step
 class Visitor(ABC):
     def visit(self, node: Node):
         if (isinstance(node, Group)):
-            self.__visitGroup(node)
+            self._visitGroup(node)
         elif (isinstance(node, Job)):
-            self.__visitJob(node)
+            self._visitJob(node)
         elif (isinstance(node, Pipeline)):
-            self.__visitPipeline(node)
+            self._visitPipeline(node)
         elif (isinstance(node, Step)):
-            self.__visitStep(node)
+            self._visitStep(node)
         # TODO else case
-            
 
     @abstractmethod
-    def __visitGroup(group):
-        pass
+    def _visitGroup(group):
+        raise NotImplemented
 
     @abstractmethod
-    def __visitJob(job):
-        pass
+    def _visitJob(job):
+        raise NotImplemented
 
     @abstractmethod
-    def __visitPipeline(pipeline):
-        pass
+    def _visitPipeline(pipeline):
+        raise NotImplemented
 
     @abstractmethod
-    def __visitStep(step):
-        pass
+    def _visitStep(step):
+        raise NotImplemented
