@@ -14,7 +14,11 @@ const useStyles = theme => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
-    generate: {}
+    item: {
+        minWidth: "20em",
+        maxWidth: "30vw",
+        marginBottom: "2em"
+    }
 });
 
 function sendData(value, url, callback, method="post"){
@@ -135,7 +139,7 @@ class Form extends React.Component {
 
     render() {
         const {isLoaded, configs} = this.state;
-        let classes = this.props.classes;
+        const classes = this.props.classes;
 
         if (!isLoaded) {
             return (<div>Loading...</div>)
@@ -147,7 +151,7 @@ class Form extends React.Component {
                         <Grid container justify="center" spacing={2}>
                             {Object.keys(configs).map((index) => {
                                 return (
-                                    <Grid key={configs[index].title} xs={4} item>
+                                    <Grid key={configs[index].title} xs item className={classes.item}>
                                         <Tile ref={configs[index].ref} tile={configs[index]} key={configs[index].title}/>
                                     </Grid>
                                 )
