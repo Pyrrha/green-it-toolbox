@@ -63,8 +63,20 @@ def submit_form():
     return {
         "items": [{
             "title": "Dockerfile",
-            "content": "from nginx:latest...",
+            "content": """FROM python:3
+
+WORKDIR /usr/src/app
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 5000
+
+CMD [ "python", "./app.py" ]
+""",
             "modal": "Texte in modal view to explain how to install it.",
-            "lang": "yaml"
+            "lang": "docker"
         }]
     }
