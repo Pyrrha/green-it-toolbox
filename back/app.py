@@ -11,6 +11,8 @@ from abstraction.step import Step
 
 from viewer.pretty_printer import PrettyPrinter
 
+from parser import Parser
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -22,7 +24,7 @@ if __name__ == '__main__':
 
     CORS(app)
 
-    pipeline = Pipeline('Pipe')
+    """ pipeline = Pipeline('Pipe')
     group = Group('Dat grp!')
     job = Job('Docker')
 
@@ -30,6 +32,12 @@ if __name__ == '__main__':
     group.add_job(job)
     pipeline.add_group(group)
 
-    pipeline.accept(PrettyPrinter())
+    pipeline.accept(PrettyPrinter()) """
+
+    print("STOP! Let's read!")
+
+    parser = Parser('configs/py.json')
+    pip = parser.parse()
+    pip.accept(PrettyPrinter())
 
     app.run(host='0.0.0.0')
