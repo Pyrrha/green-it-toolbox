@@ -18,4 +18,4 @@ class PrettyPrinter(Visitor):
             group.accept(self)
 
     def _visitStep(self, node):
-        print(f'Step {node.get_name()}')
+        print(f'Step {node.get_name()}: {node.get_command()}')
