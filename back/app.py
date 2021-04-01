@@ -26,7 +26,7 @@ if __name__ == '__main__':
     group = Group('Dat grp!')
     job = Job('Docker')
 
-    job.add_step(Step('Install'))
+    job.add_step(Step('Install', 'apt-get install docker-ce'))
     group.add_job(job)
     pipeline.add_group(group)
 
