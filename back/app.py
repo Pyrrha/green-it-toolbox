@@ -22,12 +22,12 @@ if __name__ == '__main__':
 
     CORS(app)
 
-    pipeline = Pipeline()
-    group = Group()
-    job = Job()
+    pipeline = Pipeline('Pipe')
+    group = Group('Dat grp!')
+    job = Job('Docker')
 
-    job.add_step(Step())
-    group.add_job(Job())
+    job.add_step(Step('Install'))
+    group.add_job(job)
     pipeline.add_group(group)
 
     pipeline.accept(PrettyPrinter())

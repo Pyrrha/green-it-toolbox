@@ -1,10 +1,12 @@
 from abc import ABC, abstractmethod
 
 class Node(ABC):
-    name = ""
+
+    def __init__(self, name: str):
+        self._name = name
 
     def get_name(self):
-        return self.name
+        return self._name
     
     def accept(self, viewer):
         viewer.visit(self)
