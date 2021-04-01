@@ -23,6 +23,8 @@ const useStyles = theme => ({
 
 function sendData(value, url, callback, method="post"){
     let header = new Headers();
+    header.append('Content-Type', 'application/json');
+    header.append('Accept', 'application/json');
     let init = {
         method: method,
         header: header,
