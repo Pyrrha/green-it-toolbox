@@ -14,9 +14,6 @@ def get_filters():
                 },
                 "js": {
                     "label": "Javascript"
-                },
-                "php": {
-                    "label": "PHP"
                 }
             },
             "text": "Which language do you use?"
@@ -24,9 +21,9 @@ def get_filters():
         {
             "title": "Tools used",
             "options": {
-                "git": {
-                  "label": "Git",
-                  "default": True,
+                "github-flow": {
+                  "label": "Using Github git flow",
+                  "default": True 
                 },
                 "github": {
                   "label": "Github Actions"
@@ -36,11 +33,7 @@ def get_filters():
                 },
                 "docker": {
                   "label": "Docker"
-                },
-                "github-flow": {
-                  "label": "Using Github git flow",
-                  "default": True 
-                },
+                }
             },
             "text": "Choose your tool."
         },
@@ -96,7 +89,7 @@ CMD [ "python", "./app.py" ]
             "lang": "docker"
         },
         {
-            "title": "Dodock",
+            "title": "Dockerfile",
             "content": """FROM node:10-alpine as builder
 
 # Copy the package.json to install dependencies
@@ -127,18 +120,42 @@ EXPOSE 80
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 """,
-            "modal": "Texte in modal view to explain how to install it.",
+            "modal": "Just place it in a node-derivated project root folder. You'll be able to create docker images using docker build .",
             "lang": "docker"
         },
         {
-            "title": "Dockerfile",
-            "content": f"""Language: {language}
+            "title": "Github Action",
+            "content": f"""name: CD
 
-Tools used: {tools_used}
+on:
+  push:
+    branches: [ master ]
 
-Environments: {environments}
-""",
-            "modal": "Texte in modal view to explain how to install it.",
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Deployment
+        uses: easingthemes/ssh-deploy@v2.1.4
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+          TARGET: ${{ secrets.REMOTE_TARGET }}
+          SOURCE: "src/"
+
+      - name: Restart server
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: sudo systemctl restart back.service
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          privateKey: ${{ secrets.SERVER_SSH_KEY }}""",
+            "modal": "Create a YAML file under .github/workflows/ at the root of your Git repository. Name it as you want, but the extension must be yml or yaml. You'll need to create secrets variables as indicated in the file to provide information needed for the good execution of this CI.",
             "lang": "yaml"
         }]
     }
