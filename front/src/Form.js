@@ -22,12 +22,13 @@ const useStyles = theme => ({
 });
 
 function sendData(value, url, callback, method="post"){
-    let header = new Headers();
-    header.append('Content-Type', 'application/json');
-    header.append('Accept', 'application/json');
+    let json_headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }
     let init = {
         method: method,
-        header: header,
+        headers: json_headers,
         mode: 'cors',
         cache: 'default',
         body: value,
