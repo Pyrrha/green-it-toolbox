@@ -39,7 +39,7 @@ class Result extends React.Component {
                     <Grid container justify="center" spacing={2}>
                         {Object.keys(this.props.blocks.items).map((index) => {
                             return (
-                                <Grid key={this.props.blocks.items[index].title} className={classes.item} xs item>
+                                <Grid key={this.props.blocks.items[index].title} className={classes.item} xs={6} item>
                                     <Code lang={this.props.blocks.items[index].lang}
                                           content={this.props.blocks.items[index].content}
                                           modal={this.props.blocks.items[index].modal}
