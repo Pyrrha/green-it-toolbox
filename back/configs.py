@@ -1,7 +1,33 @@
 import json
-from flask import Flask, Blueprint, jsonify, request
+from flask import Flask, Blueprint, request
+
+from viewer.github_action_viewer import GithubAction
+from viewer.gitlab_ci_viewer import GitlabCI
+
+from parser import Parser
 
 configs_bp = Blueprint('configs', __name__)
+
+
+def create_configuration(workflow, tool: str) -> dict:
+    print(f'Tool: {tool}')
+    
+    toolInstance = None
+    if tool == "github":
+        toolInstance = GithubAction()
+    elif tool == "gitlab":
+        toolInstance = GitlabCI()
+    else:
+        return None
+    
+    content = workflow.accept(toolInstance)
+
+    return {
+        "title": "À remplir",
+        "content": content,
+        "modal": "Toto",
+        "lang": toolInstance.get_language()
+    }
 
 @configs_bp.route('/configs', methods=['GET'])
 def get_filters():
@@ -11,12 +37,6 @@ def get_filters():
             "choices": {
                 "py": {
                     "label": "Python"
-                },
-                "js": {
-                    "label": "Javascript"
-                },
-                "php": {
-                    "label": "PHP"
                 }
             },
             "text": "Which language do you use?"
@@ -24,23 +44,16 @@ def get_filters():
         {
             "title": "Tools used",
             "options": {
-                "git": {
-                  "label": "Git",
-                  "default": True,
+                "github-flow": {
+                  "label": "Using Github git flow",
+                  "default": True 
                 },
                 "github": {
                   "label": "Github Actions"
                 },
                 "gitlab": {
                   "label": "Gitlab CI"
-                },
-                "docker": {
-                  "label": "Docker"
-                },
-                "github-flow": {
-                  "label": "Using Github git flow",
-                  "default": True 
-                },
+                }
             },
             "text": "Choose your tool."
         },
@@ -59,86 +72,47 @@ def get_filters():
         }]
     }
 
+def make_list(thing) -> list:
+    result = []
+
+    if isinstance(thing, str):
+        result.append(thing)
+    elif isinstance(thing, list):
+        result.extend(thing)
+
+    return result
+
 @configs_bp.route('/configs', methods=['POST'])
 def submit_form():
+    # Retrieve request data
     request_json = request.get_json()
 
-    # {"y": "js", "tools_used[options]": ["git", "github-flow"], "environments[options]": "prod"}
-    # {"language[choice]": "js", "tools_used[options]": ["git", "github-flow"], "environments[options]": "prod"}
     # {"language[choice]": "py", "tools_used[options]": ["git", "github-flow"], "environments[options]": ["prod", "staging"]}
 
-    language = request_json.get('language[choice]')
-    tools_used = request_json.get('tools_used[options]')
-    environments = request_json.get('environments[options]')
+    request_langage = request_json.get('language[choice]', [])
+    print(f'Request L: {request_langage}')
+    languages = make_list(request_langage)
+    print(f'List L: {languages}')
 
-    print('Request!!')
-    jscfgtbrfe = request.get_json()
-    print(jscfgtbrfe)
-    print(f'Request form: {request.form}')
+    request_tools = request_json.get('tools_used[options]', [])
+    print(f'Request T: {request_tools}')
+    tools_used = make_list(request_tools)
+    print(f'List T: {tools_used}')
 
-    return {
-        "items": [{
-            "title": "Dockerfile",
-            "content": """FROM python:3
+    request_environments = request_json.get('environments[options]')
+    print(f'Request E: {request_environments}')
+    environments = make_list(request_environments)
+    print(f'List E: {environments}')
 
-WORKDIR /usr/src/app
-
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
-
-EXPOSE 5000
-
-CMD [ "python", "./app.py" ]
-""",
-            "modal": "Texte in modal view to explain how to install it.",
-            "lang": "docker"
-        },
-        {
-            "title": "Dodock",
-            "content": """FROM node:10-alpine as builder
-
-# Copy the package.json to install dependencies
-COPY package.json ./
-
-# Install the dependencies and make the folder
-RUN yarn install && mkdir /front && mv ./node_modules ./front
-
-WORKDIR /front
-
-COPY . .
-
-# Build the project and copy the files
-RUN yarn run build
-
-
-FROM nginx:alpine
-
-COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
-
-# Remove default nginx index page
-RUN rm -rf /usr/share/nginx/html/*
-
-# Copy from the stahg 1
-COPY --from=builder /front/build /usr/share/nginx/html
-
-EXPOSE 80
-
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
-""",
-            "modal": "Texte in modal view to explain how to install it.",
-            "lang": "docker"
-        },
-        {
-            "title": "Dockerfile",
-            "content": f"""Language: {language}
-
-Tools used: {tools_used}
-
-Environments: {environments}
-""",
-            "modal": "Texte in modal view to explain how to install it.",
-            "lang": "yaml"
-        }]
+    configurations = {
+        "items": []
     }
+
+    for language in languages:
+        parser = Parser(f'configs/{language}.json') # TODO secure that
+        workflow = parser.parse()
+        for tool in tools_used:
+            configuration = create_configuration(workflow, tool)
+            configurations["items"].append(configurations)
+
+    return configurations

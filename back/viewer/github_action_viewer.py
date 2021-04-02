@@ -2,7 +2,7 @@ from viewer.visitor import Visitor
 
 class GithubAction(Visitor):
 
-    def __init__():
+    def __init__(self):
         super().__init__('yaml')
 
     def _visitGroup(self, node):

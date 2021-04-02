@@ -25,23 +25,10 @@ if __name__ == '__main__':
     app.register_blueprint(configs_bp)
 
     CORS(app)
-
-    """ pipeline = Pipeline('Pipe')
-    group = Group('Dat grp!')
-    job = Job('Docker')
-
-    job.add_step(Step('Install', 'apt-get install docker-ce'))
-    group.add_job(job)
-    pipeline.add_group(group)
-
-    pipeline.accept(PrettyPrinter()) """
-
-    print("STOP! Let's read!")
-
+    
     parser = Parser('configs/py.json')
     pip = parser.parse()
-    print('After parse')
     print(pip.accept(GitlabCI()))
-    print(GitlabCI().get_language())
+    # print(GitlabCI().get_language())
 
     app.run(host='0.0.0.0')

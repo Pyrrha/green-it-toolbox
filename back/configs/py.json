@@ -1,27 +1,68 @@
 {
-    "name": "default pipeline",
+    "name": "default-pipeline",
     "groups": [
         {
-            "name": "group 1",
+            "name": "artefact",
             "jobs": [
                 {
-                    "name": "job beep beep",
+                    "name": "compilation",
                     "steps": [
                         {
-                            "name": "step 1",
-                            "command": "throw your hands up then point them to the floor"
+                            "name": "compile",
+                            "command": "make"
+                        }
+                    ]
+                },
+                {
+                    "name": "docker",
+                    "steps": [
+                        {
+                            "name": "docker-login",
+                            "command": "docker login -u USERNAME -p PASSWORD"
                         },
                         {
-                            "name": "step 2",
-                            "command": "here's what to do now get down on all fours"
+                            "name": "build-image",
+                            "command": "docker build . -t USERNAME/project:latest"
                         },
                         {
-                            "name": "step 3",
-                            "command": "just bounce around it's easy follow me"
+                            "name": "publish-image",
+                            "command": "docker push USERNAME/project:latest"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "staging",
+            "jobs": [
+                {
+                    "name": "deployment-staging",
+                    "steps": [
+                        {
+                            "name": "deploy-staging",
+                            "command": "scp docker-compose.yml user@hostname:/path"
                         },
                         {
-                            "name": "step 4",
-                            "command": "go crazy now, and beep beep like a sheep"
+                            "name": "apply-staging",
+                            "command": "ssh user@hostname 'docker stack deploy -c <(docker-compose -f docker-compose.yml config) project'"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "production",
+            "jobs": [
+                {
+                    "name": "deployment-production",
+                    "steps": [
+                        {
+                            "name": "deploy-production",
+                            "command": "scp docker-compose.yml user@hostname:/path"
+                        },
+                        {
+                            "name": "apply-production",
+                            "command": "ssh user@hostname 'docker stack deploy -c <(docker-compose -f docker-compose.yml config) project'"
                         }
                     ]
                 }
