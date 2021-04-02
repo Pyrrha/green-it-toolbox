@@ -10,6 +10,7 @@ from abstraction.pipeline import Pipeline
 from abstraction.step import Step
 
 from viewer.pretty_printer import PrettyPrinter
+from viewer.github_action_viewer import GithubAction
 
 from parser import Parser
 
@@ -38,6 +39,7 @@ if __name__ == '__main__':
 
     parser = Parser('configs/py.json')
     pip = parser.parse()
-    pip.accept(PrettyPrinter())
+    print('After parse')
+    print(pip.accept(GithubAction()))
 
     app.run(host='0.0.0.0')

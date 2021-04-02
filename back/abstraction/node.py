@@ -9,4 +9,4 @@ class Node(ABC):
         return self._name
     
     def accept(self, viewer):
-        viewer.visit(self)
+        return viewer.visit(self)
