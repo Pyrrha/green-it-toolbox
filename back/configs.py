@@ -61,6 +61,16 @@ def get_filters():
 
 @configs_bp.route('/configs', methods=['POST'])
 def submit_form():
+    request_json = request.get_json()
+
+    # {"y": "js", "tools_used[options]": ["git", "github-flow"], "environments[options]": "prod"}
+    # {"language[choice]": "js", "tools_used[options]": ["git", "github-flow"], "environments[options]": "prod"}
+    # {"language[choice]": "py", "tools_used[options]": ["git", "github-flow"], "environments[options]": ["prod", "staging"]}
+
+    language = request_json.get('language[choice]')
+    tools_used = request_json.get('tools_used[options]')
+    environments = request_json.get('environments[options]')
+
     print('Request!!')
     jscfgtbrfe = request.get_json()
     print(jscfgtbrfe)
@@ -122,9 +132,14 @@ ENTRYPOINT ["nginx", "-g", "daemon off;"]
         },
         {
             "title": "Dockerfile",
-            "content": json.dumps(jscfgtbrfe),
+            "content": f"""Language: {language}
+
+Tools used: {tools_used}
+
+Environments: {environments}
+""",
             "modal": "Texte in modal view to explain how to install it.",
-            "lang": "docker"
+            "lang": "yaml"
         }
 
         
