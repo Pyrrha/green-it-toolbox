@@ -7,6 +7,12 @@ from abstraction.pipeline import Pipeline
 from abstraction.step import Step
 
 class Visitor(ABC):
+    def __init__(self, language: str):
+        self.language = language
+
+    def get_language(self):
+        return self.language
+
     def visit(self, node: Node):
         if (isinstance(node, Group)):
             return self._visitGroup(node)
