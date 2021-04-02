@@ -9,13 +9,13 @@ from abstraction.step import Step
 class Visitor(ABC):
     def visit(self, node: Node):
         if (isinstance(node, Group)):
-            self._visitGroup(node)
+            return self._visitGroup(node)
         elif (isinstance(node, Job)):
-            self._visitJob(node)
+            return self._visitJob(node)
         elif (isinstance(node, Pipeline)):
-            self._visitPipeline(node)
+            return self._visitPipeline(node)
         elif (isinstance(node, Step)):
-            self._visitStep(node)
+            return self._visitStep(node)
         # TODO else case
 
     @abstractmethod
