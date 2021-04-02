@@ -1,3 +1,4 @@
+import json
 from flask import Flask, Blueprint, jsonify, request
 
 configs_bp = Blueprint('configs', __name__)
@@ -121,7 +122,7 @@ ENTRYPOINT ["nginx", "-g", "daemon off;"]
         },
         {
             "title": "Dockerfile",
-            "content": jscfgtbrfe,
+            "content": json.dumps(jscfgtbrfe),
             "modal": "Texte in modal view to explain how to install it.",
             "lang": "docker"
         }
