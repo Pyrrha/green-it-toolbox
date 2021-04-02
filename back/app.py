@@ -11,6 +11,7 @@ from abstraction.step import Step
 
 from viewer.pretty_printer import PrettyPrinter
 from viewer.github_action_viewer import GithubAction
+from viewer.gitlab_ci_viewer import GitlabCI
 
 from parser import Parser
 
@@ -40,6 +41,7 @@ if __name__ == '__main__':
     parser = Parser('configs/py.json')
     pip = parser.parse()
     print('After parse')
-    print(pip.accept(GithubAction()))
+    print(pip.accept(GitlabCI()))
+    print(GitlabCI().get_language())
 
     app.run(host='0.0.0.0')
