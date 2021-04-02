@@ -140,9 +140,5 @@ Environments: {environments}
 """,
             "modal": "Texte in modal view to explain how to install it.",
             "lang": "yaml"
-        }
-
-        
-        
-        ]
+        }]
     }
