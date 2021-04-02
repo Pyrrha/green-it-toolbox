@@ -61,7 +61,8 @@ def get_filters():
 @configs_bp.route('/configs', methods=['POST'])
 def submit_form():
     print('Request!!')
-    print(request.get_json())
+    jscfgtbrfe = request.get_json()
+    print(jscfgtbrfe)
     print(f'Request form: {request.form}')
 
     return {
@@ -117,5 +118,15 @@ ENTRYPOINT ["nginx", "-g", "daemon off;"]
 """,
             "modal": "Texte in modal view to explain how to install it.",
             "lang": "docker"
-        }]
+        },
+        {
+            "title": "Dockerfile",
+            "content": jscfgtbrfe,
+            "modal": "Texte in modal view to explain how to install it.",
+            "lang": "docker"
+        }
+
+        
+        
+        ]
     }
